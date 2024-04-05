@@ -688,6 +688,14 @@ class rcmail extends rcube
             }
         }
 
+        // check if the given email is just a localpart name without @, then try to use the imap host from localpart_only_imap_host
+        if (!rcube_utils::check_email($username, false)) {
+            $localpart_only_imap_host = $this->config->get('localpart_only_imap_host');
+            if ($localpart_only_imap_host) {
+                $host = $localpart_only_imap_host
+            }
+        }
+
         $host = rcube_utils::parse_host($host);
 
         if (!$host) {
